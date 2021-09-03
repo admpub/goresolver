@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/miekg/dns"
-	"github.com/peterzen/goresolver"
 	"os"
+
+	"github.com/admpub/goresolver"
+	"github.com/miekg/dns"
 )
 
 func main() {

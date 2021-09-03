@@ -1,8 +1,10 @@
 package goresolver
 
 import (
-	"github.com/miekg/dns"
 	"log"
+	"strings"
+
+	"github.com/miekg/dns"
 )
 
 type RRSet struct {
@@ -12,9 +14,16 @@ type RRSet struct {
 
 func queryRRset(qname string, qtype uint16) (*RRSet, error) {
 
+	triesLeft := 2
+
+RETRY:
 	r, err := resolver.queryFn(qname, qtype)
 
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "i/o timeout") && triesLeft > 0 {
+			triesLeft--
+			goto RETRY
+		}
 		log.Printf("cannot lookup %v", err)
 		return nil, err
 	}

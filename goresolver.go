@@ -2,9 +2,10 @@ package goresolver
 
 import (
 	"errors"
-	"github.com/miekg/dns"
-	"time"
 	"strings"
+	"time"
+
+	"github.com/miekg/dns"
 )
 
 const (
@@ -18,6 +19,10 @@ type Resolver struct {
 	queryFn         func(string, uint16) (*dns.Msg, error)
 	dnsClient       *dns.Client
 	dnsClientConfig *dns.ClientConfig
+}
+
+func (r *Resolver) Config() *dns.ClientConfig {
+	return r.dnsClientConfig
 }
 
 // Errors returned by the verification/validation methods at all levels.
